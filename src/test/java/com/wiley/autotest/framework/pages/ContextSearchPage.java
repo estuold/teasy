@@ -10,7 +10,6 @@ import java.util.List;
 @Component
 public class ContextSearchPage extends AbstractPage {
 
-
     public ContextSearchPage checkContextSearch() {
         List<TeasyElement> elements = element(By.cssSelector(".test")).elements(By.cssSelector(".contextTest"));
         assertEquals(elements.size(), 1);

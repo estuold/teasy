@@ -5,12 +5,8 @@ import com.wiley.autotest.selenium.AbstractWebServiceTest;
 import com.wiley.autotest.selenium.Report;
 import org.springframework.stereotype.Service;
 import org.testng.ITestContext;
-import org.testng.ITestResult;
 import org.testng.TestRunner;
 
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.io.Writer;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -53,7 +49,7 @@ public class WebServiceMethodsInvoker extends MethodsInvoker {
                 exceptionForLog = e;
             }
 
-            String errorMessage = "Precondition method failed. " + exceptionForLog.getMessage() + ". Stacktrace: " + getStackTrace(exceptionForLog);
+            String errorMessage = "Precondition method failed " + exceptionForLog.getMessage();
             if (isBeforeAfterGroup) {
                 abstractWebServiceTest.setPostponedBeforeAfterGroupFail(errorMessage, context.getTestContext());
             } else {
@@ -63,16 +59,5 @@ public class WebServiceMethodsInvoker extends MethodsInvoker {
             new Report(errorMessage, exceptionForLog).allure();
             throw new StopTestExecutionException(errorMessage, exceptionForLog);
         }
-    }
-
-    private static String getStackTrace(Throwable throwable) {
-        if (throwable == null) {
-            return null;
-        }
-
-        Writer stacktrace = new StringWriter();
-        PrintWriter printWriter = new PrintWriter(stacktrace);
-        throwable.printStackTrace(printWriter);
-        return stacktrace.toString();
     }
 }
